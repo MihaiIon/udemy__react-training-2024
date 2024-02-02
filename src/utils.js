@@ -34,3 +34,7 @@ export const findWinningPlayer = ({ gameBoard, player1, player2 }) => {
 
   return null;
 };
+
+export const isGameDraw = (gameBoard) => {
+  return gameBoard.every((row) => row.every((cell) => cell !== null));
+}

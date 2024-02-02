@@ -3,7 +3,7 @@ import { useState } from "react";
 import Player from "./components/Player";
 import GameBoard from "./components/GameBoard";
 
-import { createPlayer, createTurnEntry, findWinningPlayer } from "./utils";
+import { createPlayer, createTurnEntry, findWinningPlayer, isGameDraw } from "./utils";
 
 function App() {
   const [gameState, setGameState] = useState({ isGameOver: false, winner: null });
@@ -23,7 +23,10 @@ function App() {
 
     // Check if there's a winner
     const winningPlayer = findWinningPlayer({ gameBoard, player1, player2 });
-    if (winningPlayer) setGameState({ isGameOver: true, winner: winningPlayer });
+    if (winningPlayer) return setGameState({ isGameOver: true, winner: winningPlayer });
+
+    // Check if it's a draw
+    if (isGameDraw(gameBoard)) return setGameState({ isGameOver: true, winner: null });
 
     // Go to next player's turn
     setCurrentPlayerIndex((currentPlayerIndex + 1) % 2);
