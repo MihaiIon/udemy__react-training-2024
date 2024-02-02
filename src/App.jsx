@@ -14,7 +14,26 @@ const createTurnEntry = ({ row, col, playerName, playerSymbol }) => ({
 function App() {
   const [player1, setPlayer1] = useState(createPlayer({ name: "Player 1", symbol: "X" }));
   const [player2, setPlayer2] = useState(createPlayer({ name: "Player 2", symbol: "O" }));
+
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const currentPlayer = currentPlayerIndex === 0 ? player1 : player2;
+
+  const [turnsHistory, setTurnsHistory] = useState([]);
+  const handlePlayerAction = ({ rowIndex, colIndex, gameBoard }) => {
+    updateTurnsHistory({ rowIndex, colIndex });
+
+    // Go to next player's turn
+    setCurrentPlayerIndex((currentPlayerIndex + 1) % 2);
+  }
+
+  const updateTurnsHistory = ({ rowIndex, colIndex }) => {
+    const newTurnsHistory = [
+      ...turnsHistory,
+      createTurnEntry({ row: rowIndex, col: colIndex, player: currentPlayer })
+    ];
+
+    setTurnsHistory(newTurnsHistory);
+  }
 
   return (
     <main>
@@ -33,7 +52,10 @@ function App() {
             onPlayerNameChange={newPlayerName => setPlayer2({ ...player2, name: newPlayerName })}
           />
         </ol>
-        <GameBoard />
+        <GameBoard
+          currentPlayer={currentPlayerIndex === 0 ? player1 : player2}
+          onPlayerAction={handlePlayerAction}
+        />
       </div>
     </main>
   )
