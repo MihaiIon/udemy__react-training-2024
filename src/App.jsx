@@ -2,8 +2,9 @@ import { useState } from "react";
 
 import Player from "./components/Player";
 import GameBoard from "./components/GameBoard";
+import Log from "./components/Log";
 
-import { createPlayer, createTurnEntry, findWinningPlayer, isGameDraw } from "./utils";
+import { createPlayer, createTurnHistory, findWinningPlayer, isGameDraw } from "./utils";
 
 function App() {
   const [gameState, setGameState] = useState({ isGameOver: false, winner: null });
@@ -35,8 +36,10 @@ function App() {
   const updateTurnsHistory = ({ rowIndex, colIndex }) => {
     const newTurnsHistory = [
       ...turnsHistory,
-      createTurnEntry({ row: rowIndex, col: colIndex, player: currentPlayer })
+      createTurnHistory({ row: rowIndex, col: colIndex, player: currentPlayer })
     ];
+    console.log("rowIndex", rowIndex);
+    console.log("colIndex", colIndex);
 
     setTurnsHistory(newTurnsHistory);
   }
@@ -64,6 +67,7 @@ function App() {
           onPlayerAction={handlePlayerAction}
         />
       </div>
+      <Log turnsHistory={turnsHistory} />
     </main>
   )
 }

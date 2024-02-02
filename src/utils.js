@@ -1,8 +1,7 @@
 export const createPlayer = ({ name, symbol }) => ({ name, symbol });
 
-export const createTurnEntry = ({ row, col, playerName, playerSymbol }) => ({
-  playerName,
-  playerSymbol,
+export const createTurnHistory = ({ row, col, player }) => ({
+  player,
   cell: { row, col },
 });
 
