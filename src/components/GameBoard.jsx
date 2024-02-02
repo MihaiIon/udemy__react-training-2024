@@ -6,10 +6,11 @@ const intialGameBoard = [
   [null, null, null],
 ];
 
-export default function GameBoard({ currentPlayer, onPlayerAction }) {
+export default function GameBoard({ currentPlayer, gameState, onPlayerAction }) {
   const [gameBoard, setGameBoard] = useState(intialGameBoard);
 
   const updateGameBoard = ({ rowIndex, colIndex, gameBoard }) => {
+    if (gameState.isGameOver) return;
     if (gameBoard[rowIndex][colIndex] !== null) return;
 
     const newGameBoard = gameBoard.map(row => [...row]);

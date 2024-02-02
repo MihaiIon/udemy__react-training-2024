@@ -3,24 +3,27 @@ import { useState } from "react";
 import Player from "./components/Player";
 import GameBoard from "./components/GameBoard";
 
-const createPlayer = ({ name, symbol }) => ({ name, symbol });
-
-const createTurnEntry = ({ row, col, playerName, playerSymbol }) => ({
-  playerName,
-  playerSymbol,
-  cell: { row, col },
-});
+import { createPlayer, createTurnEntry, findWinningPlayer } from "./utils";
 
 function App() {
+  const [gameState, setGameState] = useState({ isGameOver: false, winner: null });
+
+  // Setup players
   const [player1, setPlayer1] = useState(createPlayer({ name: "Player 1", symbol: "X" }));
   const [player2, setPlayer2] = useState(createPlayer({ name: "Player 2", symbol: "O" }));
 
+  // Get current player
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const currentPlayer = currentPlayerIndex === 0 ? player1 : player2;
 
+  // Manage turns history
   const [turnsHistory, setTurnsHistory] = useState([]);
   const handlePlayerAction = ({ rowIndex, colIndex, gameBoard }) => {
     updateTurnsHistory({ rowIndex, colIndex });
+
+    // Check if there's a winner
+    const winningPlayer = findWinningPlayer({ gameBoard, player1, player2 });
+    if (winningPlayer) setGameState({ isGameOver: true, winner: winningPlayer });
 
     // Go to next player's turn
     setCurrentPlayerIndex((currentPlayerIndex + 1) % 2);
@@ -53,6 +56,7 @@ function App() {
           />
         </ol>
         <GameBoard
+          gameState={gameState}
           currentPlayer={currentPlayerIndex === 0 ? player1 : player2}
           onPlayerAction={handlePlayerAction}
         />
