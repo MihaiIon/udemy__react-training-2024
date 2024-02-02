@@ -1,21 +1,12 @@
-import { useState } from 'react';
-
-const intialGameBoard = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
-
 export default function GameBoard({ currentPlayer, gameState, onPlayerAction }) {
-  const [gameBoard, setGameBoard] = useState(intialGameBoard);
+  const { gameBoard } = gameState;
 
-  const updateGameBoard = ({ rowIndex, colIndex, gameBoard }) => {
+  const updateGameBoard = ({ rowIndex, colIndex }) => {
     if (gameState.isGameOver) return;
     if (gameBoard[rowIndex][colIndex] !== null) return;
 
     const newGameBoard = gameBoard.map(row => [...row]);
     newGameBoard[rowIndex][colIndex] = currentPlayer.symbol;
-    setGameBoard(newGameBoard);
 
     onPlayerAction({ rowIndex, colIndex, gameBoard: newGameBoard });
   }

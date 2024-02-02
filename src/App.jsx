@@ -2,12 +2,19 @@ import { useState } from "react";
 
 import Player from "./components/Player";
 import GameBoard from "./components/GameBoard";
+import GameOverOverlay from "./components/GameOverOverlay";
 import Log from "./components/Log";
 
 import { createPlayer, createTurnHistory, findWinningPlayer, isGameDraw } from "./utils";
 
+const intialGameBoard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
+
 function App() {
-  const [gameState, setGameState] = useState({ isGameOver: false, winner: null });
+  const [gameState, setGameState] = useState({ gameBoard: intialGameBoard, isGameOver: false, winner: null });
 
   // Setup players
   const [player1, setPlayer1] = useState(createPlayer({ name: "Player 1", symbol: "X" }));
@@ -17,19 +24,20 @@ function App() {
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const currentPlayer = currentPlayerIndex === 0 ? player1 : player2;
 
+  // Get game board
+  const { gameBoard } = gameState;
+
   // Manage turns history
   const [turnsHistory, setTurnsHistory] = useState([]);
   const handlePlayerAction = ({ rowIndex, colIndex, gameBoard }) => {
+    setGameState({ ...gameState, gameBoard });
     updateTurnsHistory({ rowIndex, colIndex });
 
-    // Check if there's a winner
     const winningPlayer = findWinningPlayer({ gameBoard, player1, player2 });
-    if (winningPlayer) return setGameState({ isGameOver: true, winner: winningPlayer });
+    if (winningPlayer) return setGameState({ isGameOver: true, winner: winningPlayer, gameBoard });
 
-    // Check if it's a draw
-    if (isGameDraw(gameBoard)) return setGameState({ isGameOver: true, winner: null });
+    if (isGameDraw(gameBoard)) return setGameState({ isGameOver: true, winner: null, gameBoard });
 
-    // Go to next player's turn
     setCurrentPlayerIndex((currentPlayerIndex + 1) % 2);
   }
 
@@ -38,10 +46,13 @@ function App() {
       ...turnsHistory,
       createTurnHistory({ row: rowIndex, col: colIndex, player: currentPlayer })
     ];
-    console.log("rowIndex", rowIndex);
-    console.log("colIndex", colIndex);
 
     setTurnsHistory(newTurnsHistory);
+  }
+
+  const handleRestart = () => {
+    setGameState({ isGameOver: false, winner: null, gameBoard: intialGameBoard });
+    setTurnsHistory([]);
   }
 
   return (
@@ -61,6 +72,12 @@ function App() {
             onPlayerNameChange={newPlayerName => setPlayer2({ ...player2, name: newPlayerName })}
           />
         </ol>
+        {gameState.isGameOver && (
+          <GameOverOverlay
+            winner={gameState.winner}
+            onRestart={handleRestart}
+          />
+        )}
         <GameBoard
           gameState={gameState}
           currentPlayer={currentPlayerIndex === 0 ? player1 : player2}
