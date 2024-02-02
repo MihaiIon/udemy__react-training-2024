@@ -3,27 +3,37 @@ import { useState } from "react";
 import Player from "./components/Player";
 import GameBoard from "./components/GameBoard";
 
+const createPlayer = ({ name, symbol }) => ({ name, symbol });
+
+const createTurnEntry = ({ row, col, playerName, playerSymbol }) => ({
+  playerName,
+  playerSymbol,
+  cell: { row, col },
+});
+
 function App() {
-  const [playerName1, setPlayerName1] = useState("Player 1");
-  const [playerName2, setPlayerName2] = useState("Player 2");
+  const [player1, setPlayer1] = useState(createPlayer({ name: "Player 1", symbol: "X" }));
+  const [player2, setPlayer2] = useState(createPlayer({ name: "Player 2", symbol: "O" }));
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+
   return (
     <main>
       <div id="game-container">
         <ol id="players" className="highlight-player">
           <Player
-            symbol="X"
-            playerName={playerName1}
-            isActive={currentPlayer === 0}
-            onPlayerNameChange={newPlayerName => setPlayerName1(newPlayerName)}
+            symbol={player1.symbol}
+            playerName={player1.name}
+            isActive={currentPlayerIndex === 0}
+            onPlayerNameChange={newPlayerName => setPlayer1({ ...player1, name: newPlayerName })}
           />
           <Player
-            symbol="O"
-            playerName={playerName2}
-            isActive={currentPlayer === 1}
-            onPlayerNameChange={newPlayerName => setPlayerName2(newPlayerName)}
+            symbol={player2.symbol}
+            playerName={player2.name}
+            isActive={currentPlayerIndex === 1}
+            onPlayerNameChange={newPlayerName => setPlayer2({ ...player2, name: newPlayerName })}
           />
         </ol>
-        <GameBoard onPlayerAction={handlePlayerAction} />
+        <GameBoard />
       </div>
     </main>
   )
