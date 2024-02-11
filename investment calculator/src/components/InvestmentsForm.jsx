@@ -2,36 +2,12 @@ import { useState } from "react";
 
 export default function CalculatorForm(props) {
   const {
-    onInvestmentAmountChange,
+    formValues: { initialInvestment, annualInvestment, expectedReturn, duration },
+    onInitialInvestmentChange,
     onAnnualInvestmentChange,
     onExpectedReturnChange,
     onInvestmentDurationChange,
   } = props;
-
-  const [investmentAmount, setInvestmentAmount] = useState(0);
-  const [annualInvestment, setAnnualInvestment] = useState(0);
-  const [expectedReturn, setExpectedReturn] = useState(0);
-  const [investmentDuration, setInvestmentDuration] = useState(0);
-
-  const handleInvestmentAmountChange = (e) => {
-    setInvestmentAmount(e.target.value);
-    onInvestmentAmountChange(e.target.value);
-  };
-
-  const handleAnnualInvestmentChange = (e) => {
-    setAnnualInvestment(e.target.value);
-    onAnnualInvestmentChange(e.target.value);
-  };
-
-  const handleExpectedReturnChange = (e) => {
-    setExpectedReturn(e.target.value);
-    onExpectedReturnChange(e.target.value);
-  };
-
-  const handleInvestmentDurationChange = (e) => {
-    setInvestmentDuration(e.target.value);
-    onInvestmentDurationChange(e.target.value);
-  };
 
   return (
     <div id="user-input">
@@ -41,8 +17,8 @@ export default function CalculatorForm(props) {
           type="number"
           id="investment-amount"
           name="investment-amount"
-          value={investmentAmount}
-          onChange={handleInvestmentAmountChange}
+          value={initialInvestment}
+          onChange={event => onInitialInvestmentChange(parseInt(event.target.value))}
           required
         />
       </label>
@@ -53,7 +29,7 @@ export default function CalculatorForm(props) {
           id="annual-investment"
           name="annual-investment"
           value={annualInvestment}
-          onChange={handleAnnualInvestmentChange}
+          onChange={event => onAnnualInvestmentChange(parseInt(event.target.value))}
           required
         />
       </label>
@@ -64,7 +40,7 @@ export default function CalculatorForm(props) {
           id="expected-return"
           name="expected-return"
           value={expectedReturn}
-          onChange={handleExpectedReturnChange}
+          onChange={event => onExpectedReturnChange(parseInt(event.target.value))}
           required
         />
       </label>
@@ -74,8 +50,8 @@ export default function CalculatorForm(props) {
           type="number"
           id="investment-duration"
           name="investment-duration"
-          value={investmentDuration}
-          onChange={handleInvestmentDurationChange}
+          value={duration}
+          onChange={event => onInvestmentDurationChange(parseInt(event.target.value))}
           required
         />
       </label>
