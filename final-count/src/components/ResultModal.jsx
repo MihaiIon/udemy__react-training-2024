@@ -1,6 +1,16 @@
-export default function ResultModal({ result, targetTime }) {
+import { forwardRef, useImperativeHandle, useRef } from "react";
+
+const ResultModal = forwardRef(function ResultModal({ result, targetTime }, ref) {
+  const modalRef = useRef();
+
+  useImperativeHandle(ref, () => ({
+    open() {
+      modalRef.current.showModal();
+    }
+  }));
+
   return (
-    <dialog className="result-modal" open>
+    <dialog ref={modalRef} className="result-modal">
       <h2>You {result}</h2>
       <p>
         The target time was <strong>{targetTime} second{targetTime > 1 ? "s" : ""}</strong>.
@@ -13,4 +23,6 @@ export default function ResultModal({ result, targetTime }) {
       </form>
     </dialog>
   );
-}
+});
+
+export default ResultModal;
