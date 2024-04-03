@@ -1,7 +1,9 @@
-function App() {
+import SideNavigation from './components/SideNavigation';
+
+const App = () => {
   return (
     <>
-      <h1 className="my-8 text-center text-5xl font-bold">Hello World</h1>
+      <SideNavigation />
     </>
   );
 }
