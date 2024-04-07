@@ -21,10 +21,10 @@ const Alert = ({ variant, children, show, onClose }) => {
       break;
   }
 
-  const animationClasses = show ? 'opacity-100 translate-y-6' : 'opacity-0 -translate-y-6';
+  const animationClasses = show ? 'opacity-100 translate-y-6' : 'opacity-0 translate-y-0';
 
   return (
-    <div className={`absolute top-0 right-0 left-0 transition p-4 ${bgColor} ${textColor} ${animationClasses} rounded-md`}>
+    <div className={`absolute top-2 right-0 left-0 transition duration-300 p-4 ${bgColor} ${textColor} ${animationClasses} rounded-md`}>
       {children}
 
       <button className={`float-right ${textColor} hover:text-gray-800`} onClick={onClose}>
