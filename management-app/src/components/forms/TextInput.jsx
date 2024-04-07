@@ -9,7 +9,7 @@ export default function TextInput({ id, label, value, onChange, className = "" }
 
   return (
     <InputGroup>
-      <Label forInputId={id}>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <input
         className={inputClassNames}
         type="text"

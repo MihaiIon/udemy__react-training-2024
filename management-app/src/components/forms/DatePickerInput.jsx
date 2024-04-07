@@ -9,7 +9,7 @@ export default function DatePickerInput({ id, label, value, onChange, className 
 
   return (
     <InputGroup>
-      <Label forInputId={id}>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <input
         type="date"
         id={id}
