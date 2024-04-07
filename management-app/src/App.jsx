@@ -27,16 +27,17 @@ const createNewProject = (projectDetails) => {
 
 const App = () => {
   const [pageDisplayed, setPageDisplayed] = useState(PREDEFINED_PAGES.NO_PROJECT_SELECTED);
-  const [projects, setProjects] = useState([]);
-
   const goToCreateNewProjectPage = () => setPageDisplayed(PREDEFINED_PAGES.ADD_PROJECT);
   const goToNoProjectSelectedPage = () => setPageDisplayed(PREDEFINED_PAGES.NO_PROJECT_SELECTED);
+  
+  const [projects, setProjects] = useState([]);
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
 
   const handleOnSave = (projectDetails) => {
     const project = createNewProject(projectDetails);
     setProjects([...projects, project]);
     console.log('Projects:', projects);
-    
+
     setPageDisplayed(PREDEFINED_PAGES.NO_PROJECT_SELECTED);
   };
 
@@ -51,7 +52,12 @@ const App = () => {
 
   return (
     <>
-      <SideNavigation onAddProject={goToCreateNewProjectPage} />
+      <SideNavigation
+        onAddProject={goToCreateNewProjectPage}
+        projects={projects}
+        selectedProjectId={selectedProjectId}
+        onProjectSelected={projectId => setSelectedProjectId(projectId)}
+      />
       <main className="ml-80 px-12">
         {page}
       </main>
