@@ -1,4 +1,5 @@
 import Label from "./Label";
+import InputGroup from "./InputGroup";
 
 export default function TextInput({ id, label, value, onChange, className = "" }) {
   const generalInputClasses = "w-full text-xl px-4 py-2 rounded-md";
@@ -7,7 +8,7 @@ export default function TextInput({ id, label, value, onChange, className = "" }
   const inputClassNames = `${generalInputClasses} ${colorInputClasses} ${focusInputClasses} ${className}`;
 
   return (
-    <div className="mb-4 w-full">
+    <InputGroup>
       <Label forInputId={id}>{label}</Label>
       <input
         className={inputClassNames}
@@ -16,6 +17,6 @@ export default function TextInput({ id, label, value, onChange, className = "" }
         value={value}
         onChange={onChange}
       />
-    </div>
+    </InputGroup>
   );
 }
