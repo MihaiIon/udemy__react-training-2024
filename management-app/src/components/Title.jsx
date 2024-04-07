@@ -1,6 +1,6 @@
 export default function Title({ variant = "light", children }) {
 
-  let titleClasses = "text-2xl font-bold";
+  let titleClasses = "text-2xl mb-4 font-bold";
   
   if (variant === "light") {
     titleClasses += " text-stone-700";
