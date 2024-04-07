@@ -1,7 +1,7 @@
 import Button from "./Button";
 import Title from "./Title";
 
-const SideNavigation = () => {
+const SideNavigation = ({ onAddProject }) => {
   return (
     <aside
       className="container h-screen w-80 bg-stone-950 float-left"
@@ -10,7 +10,7 @@ const SideNavigation = () => {
     >
       <header className="px-8 pt-12 pb-6">
         <Title variant="dark" className="uppercase">YOUR PROJECTS</Title>
-        <Button variant="dark">+ Add Project</Button>
+        <Button variant="dark" onClick={onAddProject}>+ Add Project</Button>
       </header>
       <nav>
         <ul>
