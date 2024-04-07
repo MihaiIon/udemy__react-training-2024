@@ -1,5 +1,6 @@
 import Button from "../components/Button";
 import TextInput from "../components/forms/TextInput";
+import TextAreaInput from "../components/forms/TextAreaInput";
 
 export default function CreateNewProject() {
   const generalClasses = "text-xl px-4 py-2 mb-4 rounded-md";
@@ -16,6 +17,7 @@ export default function CreateNewProject() {
       </div>
 
       <TextInput id="project-title" label="Title" value="project-name" className={inputClassNames} />
+      <TextAreaInput id="project-description" label="Description" value="project-description" className={inputClassNames} />
     </div>
   );
 }
