@@ -1,6 +1,7 @@
 import Button from "../components/Button";
 import TextInput from "../components/forms/TextInput";
 import TextAreaInput from "../components/forms/TextAreaInput";
+import DatePickerInput from "../components/forms/DatePickerInput";
 
 export default function CreateNewProject() {
   const generalClasses = "text-xl px-4 py-2 mb-4 rounded-md";
@@ -18,6 +19,7 @@ export default function CreateNewProject() {
 
       <TextInput id="project-title" label="Title" value="project-name" className={inputClassNames} />
       <TextAreaInput id="project-description" label="Description" value="project-description" className={inputClassNames} />
+      <DatePickerInput id="project-start-date" label="Start Date" value="2021-01-01" className={inputClassNames} />
     </div>
   );
 }
