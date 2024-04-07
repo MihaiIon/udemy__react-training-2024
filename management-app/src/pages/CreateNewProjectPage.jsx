@@ -1,14 +1,16 @@
+import { useState } from "react";
+
 import Button from "../components/Button";
 import TextInput from "../components/forms/TextInput";
 import TextAreaInput from "../components/forms/TextAreaInput";
 import DatePickerInput from "../components/forms/DatePickerInput";
 
 export default function CreateNewProject() {
-  const generalClasses = "text-xl px-4 py-2 mb-4 rounded-md";
-  const colorClasses = "border-b-4 border-stone-300 bg-stone-200";
-  const focusClasses = "focus:outline-none focus:ring-0 focus:border-stone-700 transition-colors duration-300 ease-in-out";
-  
-  const inputClassNames = `${generalClasses} ${colorClasses} ${focusClasses}`;
+  const [projectDetails, setProjectDetails] = useState({
+    title: "",
+    description: "",
+    startDate: "",
+  });
 
   return (
     <div className="flex flex-col justify-center h-screen w-full">
@@ -17,9 +19,24 @@ export default function CreateNewProject() {
         <Button className="float-right">Cancel</Button>
       </div>
 
-      <TextInput id="project-title" label="Title" value="project-name" className={inputClassNames} />
-      <TextAreaInput id="project-description" label="Description" value="project-description" className={inputClassNames} />
-      <DatePickerInput id="project-start-date" label="Start Date" value="2021-01-01" className={inputClassNames} />
+      <TextInput
+        id="project-title"
+        label="Title"
+        value={projectDetails.title}
+        onChange={event => setProjectDetails({ ...projectDetails, title: event.target.value })}
+      />
+      <TextAreaInput
+        id="project-description"
+        label="Description"
+        value={projectDetails.description}
+        onChange={event => setProjectDetails({ ...projectDetails, description: event.target.value })}
+      />
+      <DatePickerInput
+        id="project-start-date"
+        label="Start Date"
+        value={projectDetails.startDate}
+        onChange={event => setProjectDetails({ ...projectDetails, startDate: event.target.value })}
+      />
     </div>
   );
 }
