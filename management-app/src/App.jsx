@@ -12,14 +12,26 @@ const PREDEFINED_PAGES = {
 
 const App = () => {
   const [pageDisplayed, setPageDisplayed] = useState(PREDEFINED_PAGES.NO_PROJECT_SELECTED);
+  const [projects, setProjects] = useState([]);
+
+  const createNewProject = (projectDetails) => {
+    console.log(projectDetails);
+    setProjects([...projects, projectDetails]);
+    setPageDisplayed(PREDEFINED_PAGES.NO_PROJECT_SELECTED);
+  };
 
   let page;
   switch (pageDisplayed) {
     case PREDEFINED_PAGES.ADD_PROJECT:
-      page = <CreateNewProjectPage />;
+      page = (
+        <CreateNewProjectPage
+          onCancel={() => setPageDisplayed(PREDEFINED_PAGES.NO_PROJECT_SELECTED)}
+          onCreateNewProject={createNewProject}
+        />
+      );
       break;
     default:
-      page = <NoProjectSelectedPage />;
+      page = <NoProjectSelectedPage onCreateNewProject={createNewProject} />;
   }
 
   return (

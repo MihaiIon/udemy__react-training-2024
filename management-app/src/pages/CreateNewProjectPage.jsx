@@ -5,7 +5,7 @@ import TextInput from "../components/forms/TextInput";
 import TextAreaInput from "../components/forms/TextAreaInput";
 import DatePickerInput from "../components/forms/DatePickerInput";
 
-export default function CreateNewProject() {
+export default function CreateNewProject({ onCancel, onCreateNewProject }) {
   const [projectDetails, setProjectDetails] = useState({
     title: "",
     description: "",
@@ -15,8 +15,8 @@ export default function CreateNewProject() {
   return (
     <div className="flex flex-col justify-center h-screen w-full">
       <div className="mb-4">
-        <Button variant="light" className="ml-2 float-right">Save</Button>
-        <Button className="float-right">Cancel</Button>
+        <Button variant="light" className="ml-2 float-right" onClick={() => onCreateNewProject(projectDetails)}>Save</Button>
+        <Button className="float-right" onClick={onCancel}>Cancel</Button>
       </div>
 
       <TextInput
