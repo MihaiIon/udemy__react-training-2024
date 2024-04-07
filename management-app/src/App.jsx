@@ -14,6 +14,9 @@ const App = () => {
   const [pageDisplayed, setPageDisplayed] = useState(PREDEFINED_PAGES.NO_PROJECT_SELECTED);
   const [projects, setProjects] = useState([]);
 
+  const goToCreateNewProjectPage = () => setPageDisplayed(PREDEFINED_PAGES.ADD_PROJECT);
+  const goToNoProjectSelectedPage = () => setPageDisplayed(PREDEFINED_PAGES.NO_PROJECT_SELECTED);
+
   const createNewProject = (projectDetails) => {
     console.log(projectDetails);
     setProjects([...projects, projectDetails]);
@@ -25,18 +28,18 @@ const App = () => {
     case PREDEFINED_PAGES.ADD_PROJECT:
       page = (
         <CreateNewProjectPage
-          onCancel={() => setPageDisplayed(PREDEFINED_PAGES.NO_PROJECT_SELECTED)}
-          onCreateNewProject={createNewProject}
+          onCancel={goToNoProjectSelectedPage}
+          onSave={createNewProject}
         />
       );
       break;
     default:
-      page = <NoProjectSelectedPage onCreateNewProject={createNewProject} />;
+      page = <NoProjectSelectedPage onCreateNewProject={goToCreateNewProjectPage} />;
   }
 
   return (
     <>
-      <SideNavigation onAddProject={() => setPageDisplayed(PREDEFINED_PAGES.ADD_PROJECT)} />
+      <SideNavigation onAddProject={goToCreateNewProjectPage} />
       <main className="ml-80 px-12">
         {page}
       </main>
