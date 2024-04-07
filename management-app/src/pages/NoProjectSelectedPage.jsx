@@ -10,7 +10,7 @@ export default function NoProjectSelectedPage() {
         <img src={noProjectsImg} alt="No Project Selected" className="mx-auto mb-4 w-24" />
         <Title>No Project Selected</Title>
         <p className="mb-4 text-stone-400">Select a project or get started with a new one</p>
-        <Button>Create a New Project</Button>
+        <Button variant="light">Create a New Project</Button>
       </div>
     </div>
   );

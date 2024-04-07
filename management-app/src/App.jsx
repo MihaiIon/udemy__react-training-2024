@@ -25,7 +25,7 @@ const App = () => {
   return (
     <>
       <SideNavigation onAddProject={() => setPageDisplayed(PREDEFINED_PAGES.ADD_PROJECT)} />
-      <main className="ml-80">
+      <main className="ml-80 px-12">
         {page}
       </main>
     </>
