@@ -23,7 +23,26 @@ const createNewProject = (projectDetails) => {
   return {
     id: generateUniqueId(),
     ...projectDetails,
+    tasks: [],
   };
+};
+
+const createTask = (projects, projectId, taskName) => {
+  const updatedProjects = projects.map(project => {
+    if (project.id === projectId) {
+      return {
+        ...project,
+        tasks: [...project.tasks, {
+          id: generateUniqueId(),
+          name: taskName,
+        }],
+      };
+    }
+    
+    return project;
+  });
+
+  return updatedProjects;
 };
 
 const App = () => {
@@ -52,6 +71,25 @@ const App = () => {
     setPageDisplayed(PREDEFINED_PAGES.NO_PROJECT_SELECTED);
   }
 
+  const handleCreateTask = (projectId, taskName) => {
+    const updatedProjects = createTask(projects, projectId, taskName);
+    setProjects(updatedProjects);
+  }
+
+  const handleDeleteTask = (projectId, taskId) => {
+    const updatedProjects = projects.map(project => {
+      if (project.id === projectId) {
+        return {
+          ...project,
+          tasks: project.tasks.filter(task => task.id !== taskId),
+        };
+      }
+      return project;
+    });
+
+    setProjects(updatedProjects);
+  }
+
   let page;
   switch (pageDisplayed) {
     case PREDEFINED_PAGES.ADD_PROJECT:
@@ -65,6 +103,8 @@ const App = () => {
         <ProjectPage
           project={projects.filter(project => project.id === selectedProjectId)[0]}
           onDeleteProject={handleDeleteProject}
+          onCreateTask={handleCreateTask}
+          onDeleteTask={handleDeleteTask}
         />
       )
   }
