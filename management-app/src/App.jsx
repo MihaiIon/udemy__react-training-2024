@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import NoProjectSelectedPage from './pages/NoProjectSelectedPage';
 import CreateNewProjectPage from './pages/CreateNewProjectPage';
+import ProjectPage from './pages/ProjectPage';
 
 import SideNavigation from './components/SideNavigation';
 
@@ -36,18 +37,36 @@ const App = () => {
   const handleOnSave = (projectDetails) => {
     const project = createNewProject(projectDetails);
     setProjects([...projects, project]);
-    console.log('Projects:', projects);
 
     setPageDisplayed(PREDEFINED_PAGES.NO_PROJECT_SELECTED);
   };
+
+  const handleSelectProject = (projectId) => {
+    setSelectedProjectId(projectId);
+    setPageDisplayed(projectId);
+  }
+
+  const handleDeleteProject = (projectId) => {
+    setProjects(projects.filter(project => project.id !== projectId));
+    setSelectedProjectId(null);
+    setPageDisplayed(PREDEFINED_PAGES.NO_PROJECT_SELECTED);
+  }
 
   let page;
   switch (pageDisplayed) {
     case PREDEFINED_PAGES.ADD_PROJECT:
       page = <CreateNewProjectPage onCancel={goToNoProjectSelectedPage} onSave={handleOnSave} />;
       break;
-    default:
+    case PREDEFINED_PAGES.NO_PROJECT_SELECTED:
       page = <NoProjectSelectedPage onCreateNewProject={goToCreateNewProjectPage} />;
+      break;
+    default:
+      page = (
+        <ProjectPage
+          project={projects.filter(project => project.id === selectedProjectId)[0]}
+          onDeleteProject={handleDeleteProject}
+        />
+      )
   }
 
   return (
@@ -56,7 +75,7 @@ const App = () => {
         onAddProject={goToCreateNewProjectPage}
         projects={projects}
         selectedProjectId={selectedProjectId}
-        onProjectSelected={projectId => setSelectedProjectId(projectId)}
+        onProjectSelected={projectId => handleSelectProject(projectId)}
       />
       <main className="ml-80 px-12">
         {page}

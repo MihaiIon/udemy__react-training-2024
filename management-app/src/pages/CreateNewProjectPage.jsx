@@ -27,7 +27,7 @@ export default function CreateNewProject({ onCancel, onSave }) {
     onSave({
       title: Date.now(),
       description: "Some description\nWith multiple lines\nAnd special characters: !@#$%^&*()",
-      startDate: "2021-09-01",
+      startDate: new Date().toISOString().split("T")[0],
     })
   };
 
@@ -38,7 +38,7 @@ export default function CreateNewProject({ onCancel, onSave }) {
       </Alert>
 
       <div className="mb-8">
-        <Button variant="light" className="ml-2 float-right" onClick={handleSaveForDebugging}>Save</Button>
+        <Button variant="light" className="ml-2 float-right" onClick={handleSaveForDebugging}>Save (Debug)</Button>
         <Button variant="light" className="ml-2 float-right" onClick={handleSaveWithValidation}>Save</Button>
         <Button className="float-right" onClick={onCancel}>Cancel</Button>
       </div>
