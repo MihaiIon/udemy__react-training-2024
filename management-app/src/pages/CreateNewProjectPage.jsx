@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import Page from "./Page";
 import Button from "../components/Button";
 import TextInput from "../components/forms/TextInput";
 import TextAreaInput from "../components/forms/TextAreaInput";
@@ -23,7 +24,7 @@ export default function CreateNewProject({ onCancel, onSave }) {
   };
 
   return (
-    <div className="relative flex flex-col justify-center h-screen w-full">
+    <Page>
       <Alert variant="error" show={showAlert} onClose={() => setShowAlert(false)}>
         All values are required. Please fill in all fields.
       </Alert>
@@ -51,6 +52,6 @@ export default function CreateNewProject({ onCancel, onSave }) {
         value={projectDetails.startDate}
         onChange={event => setProjectDetails({ ...projectDetails, startDate: event.target.value })}
       />
-    </div>
+    </Page>
   );
 }
